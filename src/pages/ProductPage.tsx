@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react"
 import axios from "axios"
 import { CardProduct } from "../components/fragments/CardProduct"
 import { Button } from "../components/elements/Button"
-import { jwtDecode } from "jwt-decode"
+import { useLogin } from "../hooks/useLogin"
 
 type Product = {
     id: number
@@ -22,9 +22,7 @@ type CartItem = {
     qty: number
 }
 
-interface DecodedToken {
-    user: string
-}
+
 
 export const ProductPage = () => {
     const [products, setProducts] = useState<Product[]>([])
@@ -33,38 +31,8 @@ export const ProductPage = () => {
         return savedCart ? JSON.parse(savedCart) : []
     })
     const [totalCount, setTotalCount] = useState<number>(0)
-    const [username, setUsername] = useState<string | null>(null)
     const totalAmountRef = useRef<HTMLDivElement | null>(null)
-
-    useEffect(() => {
-        const validateToken = () => {
-            const token = localStorage.getItem("token")
-            console.log("Token:", token)
-
-            if (!token) {
-                window.location.href = "/"
-                return
-            }
-
-            try {
-                const decoded = jwtDecode<DecodedToken>(token)
-                console.log("Decoded token:", decoded)
-
-                if (!decoded.user) {
-                    console.error("Username not found in token")
-                    return
-                }
-
-                setUsername(decoded.user)
-            } catch (error) {
-                console.error("Invalid token:", error)
-                localStorage.removeItem("token")
-                window.location.href = "/"
-            }
-        }
-
-        validateToken()
-    }, [])
+    const username = useLogin()
 
     useEffect(() => {
         const fetchProducts = async () => {

@@ -1,5 +1,6 @@
 import React from "react"
 import { Button } from "../elements/Button"
+import { Link } from "react-router-dom"
 
 interface CardProductProps {
     id: number
@@ -14,7 +15,9 @@ interface CardProductProps {
 export const CardProduct: React.FC<CardProductProps> = ({ id, title, description, price, category, image, handleAddToCart }) => {
     return (
         <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ml-10 my-3">
-            <img src={image} alt={title} className="w-full h-56 object-cover" />
+            <Link to={`/detail/${id}`}>
+                <img src={image} alt={title} className="w-full h-56 object-cover" />
+            </Link>
             <div className="p-4">
                 <h3 className="text-xl font-semibold text-gray-800">{title.substring(0, 21)}...</h3>
                 <h2 className="text-sm text-gray-800 mb-3">{description.substring(0, 90)}...</h2>
