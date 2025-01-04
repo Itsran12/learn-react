@@ -1,6 +1,8 @@
 import React from "react"
 import { Button } from "../elements/Button"
 import { Link } from "react-router-dom"
+import { addToCart } from "../../features/counter/counterSlice"
+import { useDispatch } from "react-redux"
 
 interface CardProductProps {
     id: number
@@ -9,10 +11,11 @@ interface CardProductProps {
     price: number
     category: string
     image: string
-    handleAddToCart: (id: number) => void
 }
 
-export const CardProduct: React.FC<CardProductProps> = ({ id, title, description, price, category, image, handleAddToCart }) => {
+export const CardProduct: React.FC<CardProductProps> = ({ id, title, description, price, category, image }) => {
+    const dispatch = useDispatch()
+
     return (
         <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 ml-10 my-3">
             <Link to={`/detail/${id}`}>
@@ -29,7 +32,7 @@ export const CardProduct: React.FC<CardProductProps> = ({ id, title, description
                 </div>
                 <Button
                     type="button"
-                    onClick={() => handleAddToCart(id)}
+                    onClick={() => dispatch(addToCart({id, qty: 1}))}
                     className="font-semibold text-white h-10 inline-block px-6 rounded-md bg-blue-600 w-full hover:bg-blue-700"
                 >
                     Add to cart
