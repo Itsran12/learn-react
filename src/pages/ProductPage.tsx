@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import axios from "axios"
 import { CardProduct } from "../components/fragments/CardProduct"
 import { useLogin } from "../hooks/useLogin"
 import { TableCart } from "../components/fragments/TabelCart"
 import { Navbar } from "../components/layouts/Navbar"
+import { DMContext } from "../context/DarkMode"
 
 type Product = {
     id: number
@@ -20,6 +21,7 @@ type Product = {
 
 export const ProductPage = () => {
     const [products, setProducts] = useState<Product[]>([])
+    const { isDarkMode } = useContext( DMContext )
     useLogin()
 
     useEffect(() => {
@@ -37,7 +39,7 @@ export const ProductPage = () => {
     return (
         <>
             <Navbar />
-            <div className="flex mt-5 py-5">
+            <div className={`flex mt-5 py-5 ${isDarkMode && "bg-slate-800"}`}>
                 <div className="w-3/4 flex flex-wrap">
                     {products.map((prod) => (
                         <CardProduct

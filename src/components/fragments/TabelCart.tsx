@@ -1,24 +1,24 @@
 import { useState, useEffect, useRef } from "react"
 import { useSelector } from "react-redux"
-import { RootState } from "../../app/store";
+import { RootState } from "../../app/store"
 
 interface Product {
-    id: number;
-    title: string;
-    price: number;
+    id: number
+    title: string
+    price: number
 }
 
 interface CartItem {
-    id: number;
-    qty: number;
+    id: number
+    qty: number
 }
 
 interface TableCartProps {
-    products: Product[];
+    products: Product[]
 }
 
 export const TableCart: React.FC<TableCartProps> = ({ products }) => {
-    const cart = useSelector((state: RootState) => state.counter.data as CartItem[]);
+    const cart = useSelector((state: RootState) => state.counter.data as CartItem[])
     const [totalCount, setTotalCount] = useState<number>(0)
     const totalAmountRef = useRef<HTMLDivElement | null>(null)
 

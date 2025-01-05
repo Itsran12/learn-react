@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux"
 import { useLogin } from "../../hooks/useLogin"
 import { Button } from "../elements/Button"
-import { useState, useEffect } from "react"
-import { ShoppingCart } from "lucide-react"
+import { useState, useEffect, useContext } from "react"
+import { ShoppingCart, Sun, Moon } from "lucide-react"
+import { DMContext } from "../../context/DarkMode"
 
 interface RootState {
     counter: {
@@ -18,6 +19,7 @@ export const Navbar = () => {
     const username = useLogin()
     const [totalCart, setTotalCart] = useState(0)
     const cart = useSelector((state: RootState) => state.counter.data)
+    const { isDarkMode, setIsDarkMode } = useContext( DMContext )
 
     useEffect(() => {
         const sum = cart.reduce((acc, item) => {
@@ -48,6 +50,9 @@ export const Navbar = () => {
                 onClick={handleLogout}
             >
                 Logout
+            </Button>
+            <Button className="right-2 top-2 p-2 text-white rounded" onClick={() => setIsDarkMode(!isDarkMode)}>
+                {isDarkMode ? <Sun /> : <Moon />}
             </Button>
         </div>
     )

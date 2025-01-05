@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { Provider } from 'react-redux'
 import { store } from './app/store'
+import { DarkMode } from './context/DarkMode'
 import './index.css'
 
 import { LoginPage } from './pages/LoginPage'
@@ -39,7 +40,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <DarkMode>
+        <RouterProvider router={router} />
+      </DarkMode>
     </Provider>
   </StrictMode>,
 )
